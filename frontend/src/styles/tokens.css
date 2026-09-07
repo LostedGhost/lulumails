@@ -1,0 +1,100 @@
+/* Jetons de design LuluFiles pour LuluMails. */
+
+:root {
+  /* --- Neutres : échelle slate --- */
+  --c-ink: #0f172a;
+  --c-ink-soft: #334155;
+  --c-muted: #64748b;
+  --c-faint: #94a3b8;
+  --c-line: #e2e8f0;
+  --c-line-strong: #cbd5e1;
+  --c-surface: #ffffff;
+  --c-surface-sunken: #f8fafc;
+  --c-surface-raised: #ffffff;
+  --c-canvas: #f1f5f9;
+
+  /* --- Marque LuluMails --- */
+  --c-brand: #16a34a;
+  --c-brand-strong: #15803d;
+  --c-brand-soft: #dcfce7;
+  --c-brand-ring: rgba(22, 163, 74, 0.35);
+
+  /* --- États --- */
+  --c-ok: #15803d;
+  --c-ok-bg: #dcfce7;
+  --c-warn: #b45309;
+  --c-warn-bg: #fef3c7;
+  --c-danger: #b91c1c;
+  --c-danger-bg: #fee2e2;
+  --c-info: #1d4ed8;
+  --c-info-bg: #dbeafe;
+
+  /* --- Typographie --- */
+  --font-display: "Rubik", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Rubik", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-brand: "Itim", "Segoe UI", system-ui, cursive;
+  --font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, "Consolas", monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+
+  /* --- Espacement : densité 7/10 --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+
+  --motion: 180ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --sidebar-w: 244px;
+  --header-h: 60px;
+}
+
+[data-theme="dark"] {
+  --c-ink: #f8fafc;
+  --c-ink-soft: #cbd5e1;
+  --c-muted: #94a3b8;
+  --c-faint: #64748b;
+  --c-line: #1e293b;
+  --c-line-strong: #334155;
+  --c-surface: #0f172a;
+  --c-surface-sunken: #0b1220;
+  --c-surface-raised: #172033;
+  --c-canvas: #020617;
+
+  --c-brand: #22c55e;
+  --c-brand-strong: #16a34a;
+  --c-brand-soft: rgba(34, 197, 94, 0.16);
+  --c-brand-ring: rgba(34, 197, 94, 0.4);
+
+  --c-ok: #4ade80;
+  --c-ok-bg: rgba(74, 222, 128, 0.14);
+  --c-warn: #fbbf24;
+  --c-warn-bg: rgba(251, 191, 36, 0.14);
+  --c-danger: #f87171;
+  --c-danger-bg: rgba(248, 113, 113, 0.14);
+  --c-info: #60a5fa;
+  --c-info-bg: rgba(96, 165, 250, 0.14);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+}

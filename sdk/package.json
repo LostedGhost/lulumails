@@ -1,0 +1,13 @@
+{
+  "name": "@lulumails/sdk",
+  "version": "1.0.0",
+  "description": "SDK client léger pour l'envoi d'emails via l'API LuluMails",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
