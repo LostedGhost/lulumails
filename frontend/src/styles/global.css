@@ -1,5 +1,6 @@
 @import './tokens.css';
 @import './landing.css';
+@import './scene3d.css';
 
 * {
   box-sizing: border-box;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Send, Zap, ShieldCheck, Server, Code2, ArrowRight, CheckCircle2, DollarSign, ChevronDown, ChevronUp, Sparkles, Layers, Users, Globe, Lock, Play, Check, Plus } from 'lucide-react';
+import { ThreeCanvasScene } from '../components/scene/ThreeCanvasScene';
+import { Hero3DScene } from '../components/scene/Objects3D';
 
 interface LandingPageProps {
   onGoToDashboard: () => void;
@@ -89,10 +91,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
   ];
 
   return (
-    <div style={{ background: 'var(--c-canvas)', color: 'var(--c-ink)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--c-canvas)', color: 'var(--c-ink)', minHeight: '100vh', position: 'relative' }}>
+      {/* WebGL 3D Background Canvas (Three.js floating particles) */}
+      <ThreeCanvasScene />
+
       {/* ------------------------------------------------------------ Hero */}
       <section className="hero">
         <div className="hero-glow" aria-hidden="true" />
+
+        {/* Floating CSS 3D Scene */}
+        <Hero3DScene />
 
         <div className="shell hero-inner">
           {/* Badge Style LuluFiles */}
@@ -108,7 +116,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
             fontWeight: 600,
           }}>
             <Sparkles size={14} />
-            <span>Moteur d'API Email Commercial · 100% Gratuit</span>
+            <span>Moteur 3D API Email Commercial · 100% Gratuit</span>
           </div>
 
           <h1 className="hero-title">
