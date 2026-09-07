@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Zap, ShieldCheck, Server, Code2, ArrowRight, CheckCircle2, DollarSign, ChevronDown, ChevronUp, Sparkles, Layers, Users, Globe } from 'lucide-react';
+import { Send, Zap, ShieldCheck, Server, Code2, ArrowRight, CheckCircle2, DollarSign, ChevronDown, ChevronUp, Sparkles, Layers, Users, Globe, Lock, Play, Check, Plus } from 'lucide-react';
 
 interface LandingPageProps {
   onGoToDashboard: () => void;
@@ -13,13 +13,63 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
 
   // SendGrid cost estimation vs LuluMails
   const sendgridCost = Math.round((monthlyVolume / 10000) * 15 + 20);
-  const lulumailsCost = 0;
 
   const toggleFaq = (index: number) => {
     setOpenFaq(prev => (prev === index ? null : index));
   };
 
-  const faqs = [
+  const CAPACITES = [
+    {
+      icon: Zap,
+      titre: "Moteur de Failover Intelligente",
+      texte: "Basculement automatique instantané entre Brevo, Resend, MailerSend et Gmail SMTP. Zéro interruption d'envoi même si un quota est atteint.",
+    },
+    {
+      icon: Server,
+      titre: "BYOK (Bring Your Own Key)",
+      texte: "Conservez l'entière propriété de vos comptes. Connectez vos propres clés API et crédentiels SMTP avec chiffrement sécurisé AES-256-GCM.",
+    },
+    {
+      icon: Code2,
+      titre: "SDK Client & API REST",
+      texte: "Intégrez l'envoi d'emails en 3 lignes de code avec notre SDK officiel `@lulumails/sdk` disponible pour Node.js, TypeScript, Python, PHP et cURL.",
+    },
+    {
+      icon: Layers,
+      titre: "Templates HTML Dynamiques",
+      texte: "Concevez des modèles de mails réutilisables avec injection de variables dynamiques (ex: {{name}}, {{code}}) et prévisualisation instantanée.",
+    },
+    {
+      icon: ShieldCheck,
+      titre: "Délivrabilité Optimale",
+      texte: "Vos emails bénéficient de la réputation d'expédition exceptionnelle des meilleurs routeurs sans risquer le blocage ou le dossier spam.",
+    },
+    {
+      icon: Globe,
+      titre: "100% Gratuit & Illimité",
+      texte: "Profitez du cumul des quotas gratuits de tous vos fournisseurs sans sortir votre carte bancaire ni payer d'abonnement.",
+    },
+  ];
+
+  const ETAPES = [
+    {
+      n: "01",
+      titre: "Enregistrez vos providers",
+      texte: "Ajoutez vos clés d'API gratuites (Resend, Brevo, Gmail SMTP) dans votre espace sécurisé LuluMails.",
+    },
+    {
+      n: "02",
+      titre: "Intégrez l'API / SDK",
+      texte: "Installez le SDK `@lulumails/sdk` et envoyez des emails en 3 lignes de code depuis votre application web ou mobile.",
+    },
+    {
+      n: "03",
+      titre: "Laissez faire le Failover",
+      texte: "LuluMails gère automatiquement la rotation et le basculement d'un fournisseur à l'autre sans aucun frais.",
+    },
+  ];
+
+  const FAQS = [
     {
       q: "Comment LuluMails permet-il d'envoyer des emails à 0€ ?",
       a: "LuluMails agrège les tranches gratuites (Free Tiers) des grands fournisseurs d'emails (Resend, Brevo, MailerSend, Gmail SMTP). Le moteur bascule automatiquement d'un fournisseur à l'autre lorsque le quota quotidien est atteint."
@@ -40,112 +90,85 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
 
   return (
     <div style={{ background: 'var(--c-canvas)', color: 'var(--c-ink)', minHeight: '100vh' }}>
-      {/* Hero Section */}
-      <section style={{
-        padding: 'var(--space-8) var(--space-6)',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        textAlign: 'center',
-        position: 'relative',
-      }}>
-        {/* Badge */}
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 'var(--space-2)',
-          padding: '6px 16px',
-          borderRadius: 'var(--radius-full)',
-          background: 'var(--c-brand-soft)',
-          color: 'var(--c-brand-strong)',
-          fontSize: 'var(--text-xs)',
-          fontWeight: 600,
-          marginBottom: 'var(--space-5)',
-        }}>
-          <Sparkles size={14} />
-          <span>La 1ère Plateforme d'API Email Commerciale 100% Gratuite</span>
-        </div>
+      {/* ------------------------------------------------------------ Hero */}
+      <section className="hero">
+        <div className="hero-glow" aria-hidden="true" />
 
-        {/* Main Headline */}
-        <h1 style={{
-          fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-          fontWeight: 800,
-          lineHeight: 1.15,
-          letterSpacing: '-1px',
-          marginBottom: 'var(--space-4)',
-        }}>
-          Envoyez des millions d'emails <br />
-          <span style={{ color: 'var(--c-brand)' }}>sans débourser un seul centime</span>
-        </h1>
-
-        <p style={{
-          fontSize: 'var(--text-lg)',
-          color: 'var(--c-muted)',
-          maxWidth: '750px',
-          margin: '0 auto var(--space-6)',
-          lineHeight: 1.6,
-        }}>
-          LuluMails agrège intelligemment les quotas gratuits des meilleurs routeurs (Resend, Brevo, MailerSend, SMTP) avec basculement automatique. Dites adieu aux factures SendGrid à 200$/mois.
-        </p>
-
-        {/* Hero CTAs */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-4)', flexWrap: 'wrap', marginBottom: 'var(--space-8)' }}>
-          <button onClick={() => onOpenAuth('register')} className="btn-primary" style={{ padding: '14px 28px', fontSize: 'var(--text-base)' }}>
-            <span>Démarrer gratuitement</span>
-            <ArrowRight size={18} />
-          </button>
-          <button onClick={onGoToDashboard} className="btn-secondary" style={{ padding: '14px 28px', fontSize: 'var(--text-base)' }}>
-            <span>Accéder au Dashboard App</span>
-          </button>
-        </div>
-
-        {/* Live Interactive Code Preview */}
-        <div className="card-glass" style={{
-          maxWidth: '850px',
-          margin: '0 auto',
-          textAlign: 'left',
-          boxShadow: 'var(--shadow-lg)',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)', borderBottom: '1px solid var(--c-line)', paddingBottom: 'var(--space-3)' }}>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }} />
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }} />
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }} />
-            </div>
-            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--c-muted)', fontFamily: 'var(--font-mono)' }}>app.ts — @lulumails/sdk</span>
-          </div>
-          <pre style={{
-            fontFamily: 'var(--font-mono)',
+        <div className="shell hero-inner">
+          {/* Badge Style LuluFiles */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 'var(--space-2)',
+            padding: '6px 16px',
+            borderRadius: 'var(--radius-full)',
+            background: 'var(--c-brand-soft)',
+            color: 'var(--c-brand-strong)',
             fontSize: 'var(--text-xs)',
-            color: 'var(--c-ink)',
-            lineHeight: 1.7,
-            overflowX: 'auto',
+            fontWeight: 600,
           }}>
-            <span style={{ color: 'var(--c-muted)' }}>// Intégration en 3 lignes dans votre application SaaS ou Mobile</span>{'\n'}
-            <span style={{ color: '#ec4899' }}>import</span> {'{'} LuluMails {'}'} <span style={{ color: '#ec4899' }}>from</span> <span style={{ color: 'var(--c-brand-strong)' }}>'@lulumails/sdk'</span>;{'\n\n'}
-            <span style={{ color: '#ec4899' }}>const</span> lulu = <span style={{ color: '#ec4899' }}>new</span> <span style={{ color: '#3b82f6' }}>LuluMails</span>({'{'} apiKey: <span style={{ color: 'var(--c-brand-strong)' }}>'lm_live_9a8b7c6d'</span> {'}'});{'\n\n'}
-            <span style={{ color: '#ec4899' }}>await</span> lulu.emails.<span style={{ color: '#3b82f6' }}>send</span>({'{'}{'\n'}
-            {'  '}to: <span style={{ color: 'var(--c-brand-strong)' }}>'client@example.com'</span>,{'\n'}
-            {'  '}templateId: <span style={{ color: 'var(--c-brand-strong)' }}>'tpl_welcome'</span>,{'\n'}
-            {'  '}variables: {'{'} name: <span style={{ color: 'var(--c-brand-strong)' }}>'Lucio'</span> {'}'}{'\n'}
-            {'}'}); <span style={{ color: 'var(--c-muted)' }}>// ➔ Basculement automatique Resend ➔ Brevo ➔ SMTP (0€)</span>
-          </pre>
+            <Sparkles size={14} />
+            <span>Moteur d'API Email Commercial · 100% Gratuit</span>
+          </div>
+
+          <h1 className="hero-title">
+            Envoyez des millions d'emails <br />
+            <span className="hero-accent">sans débourser un centime</span>
+          </h1>
+
+          <p className="hero-lede">
+            LuluMails agrège intelligemment les quotas gratuits des meilleurs routeurs (Resend, Brevo, MailerSend, SMTP) avec basculement automatique. Dites adieu aux factures SendGrid à 200$/mois.
+          </p>
+
+          <div className="hero-actions">
+            <button onClick={() => onOpenAuth('register')} className="btn btn-brand btn-lg">
+              <Plus size={18} />
+              <span>Démarrer gratuitement</span>
+            </button>
+            <button onClick={onGoToDashboard} className="btn btn-outline btn-lg">
+              <span>Accéder à la Console</span>
+            </button>
+          </div>
+
+          <p className="hero-note">
+            100% Gratuit · Sans carte bancaire · Accès illimité offert
+          </p>
+
+          {/* Snippet Code Style LuluFiles */}
+          <div className="snippet">
+            <div className="snippet-bar">
+              <span className="snippet-dot" />
+              <span className="snippet-dot" />
+              <span className="snippet-dot" />
+              <span className="snippet-title">email.ts — @lulumails/sdk</span>
+            </div>
+            <pre>
+              <code>
+                <span className="tk-cmd">import</span> {'{'} LuluMails {'}'} <span className="tk-cmd">from</span> <span className="tk-str">'@lulumails/sdk'</span>;{'\n\n'}
+                <span className="tk-cmd">const</span> lulu = <span className="tk-cmd">new</span> <span className="tk-key">LuluMails</span>({'{'} apiKey: <span className="tk-str">'lm_live_a1b2c3d4'</span> {'}'});{'\n\n'}
+                <span className="tk-cmd">await</span> lulu.emails.<span className="tk-key">send</span>({'{'}{'\n'}
+                {"  "}to: <span className="tk-str">'client@domaine.com'</span>,{"\n"}
+                {"  "}subject: <span className="tk-str">'Bienvenue sur l\'application'</span>,{"\n"}
+                {"  "}html: <span className="tk-str">'&lt;h1&gt;Bonjour Thomas&lt;/h1&gt;'</span>{"\n"}
+                {'}'}); <span className="tk-com">// ➔ Failover automatique Resend ➔ Brevo ➔ SMTP (0€)</span>
+              </code>
+            </pre>
+          </div>
         </div>
       </section>
 
-      {/* ROI / Savings Calculator Section */}
-      <section style={{ background: 'var(--c-surface-sunken)', padding: 'var(--space-8) var(--space-6)', borderTop: '1px solid var(--c-line)', borderBottom: '1px solid var(--c-line)' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-2)' }}>
-            💰 Calculez vos économies mensuelles
-          </h2>
-          <p style={{ color: 'var(--c-muted)', marginBottom: 'var(--space-6)' }}>
-            Déplacez le curseur pour voir combien vous économisez par rapport aux services traditionnels (SendGrid, Postmark, Mailgun).
-          </p>
+      {/* -------------------------------------------------- ROI / Calculateur Economie */}
+      <section className="section band">
+        <div className="shell text-center">
+          <div className="section-head">
+            <h2>💰 Calculez vos économies mensuelles</h2>
+            <p>Déplacez le curseur pour voir vos économies réelles par rapport à SendGrid ou Mailgun.</p>
+          </div>
 
-          <div className="card-glass" style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <div style={{ maxWidth: '680px', margin: '0 auto', background: 'var(--c-surface-raised)', padding: 'var(--space-6)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--c-line)', boxShadow: 'var(--shadow)' }}>
             <div style={{ marginBottom: 'var(--space-5)' }}>
-              <label style={{ fontWeight: 600, display: 'block', marginBottom: 'var(--space-2)' }}>
-                Volume d'emails par mois : <span style={{ color: 'var(--c-brand-strong)', fontSize: 'var(--text-xl)' }}>{monthlyVolume.toLocaleString('fr-FR')} emails</span>
+              <label style={{ fontWeight: 600, display: 'block', marginBottom: 'var(--space-2)', fontSize: 'var(--text-base)' }}>
+                Volume d'emails par mois : <span style={{ color: 'var(--c-brand-strong)', fontSize: 'var(--text-xl)', fontWeight: 700 }}>{monthlyVolume.toLocaleString('fr-FR')} emails</span>
               </label>
               <input
                 type="range"
@@ -173,153 +196,130 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
         </div>
       </section>
 
-      {/* Features Showcase Grid (Bento Grid) */}
-      <section style={{ padding: 'var(--space-8) var(--space-6)', maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-          <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-2)' }}>
-            Pourquoi choisir la plateforme LuluMails ?
-          </h2>
-          <p style={{ color: 'var(--c-muted)' }}>
-            Tout ce dont les développeurs et startups ont besoin pour envoyer des emails professionnels.
+      {/* -------------------------------------------------------- Capacités / Bento Grid */}
+      <section className="section shell" id="fonctionnalites">
+        <header className="section-head text-center">
+          <h2>Tout ce dont vous avez besoin, sans contrainte</h2>
+          <p>
+            Les limites des fournisseurs gratuits sont gérées automatiquement en arrière-plan. Vous profitez d'une infrastructure d'envoi fluide, puissante et entièrement gratuite.
           </p>
-        </div>
+        </header>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-5)' }}>
-          <div className="card-glass">
-            <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius)', background: 'var(--c-brand-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--c-brand-strong)', marginBottom: 'var(--space-4)' }}>
-              <Zap size={22} />
-            </div>
-            <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, marginBottom: 'var(--space-2)' }}>Moteur de Failover Intelligente</h3>
-            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>
-              Basculement automatique instantané entre Brevo, Resend, MailerSend et SMTP. Zéro interruption même en cas d'épuisement d'un quota gratuit.
-            </p>
-          </div>
-
-          <div className="card-glass">
-            <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius)', background: 'var(--c-brand-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--c-brand-strong)', marginBottom: 'var(--space-4)' }}>
-              <Server size={22} />
-            </div>
-            <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, marginBottom: 'var(--space-2)' }}>BYOK (Bring Your Own Key)</h3>
-            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>
-              Conservez l'entière propriété de vos comptes. Connectez vos propres clés API et crédentiels SMTP avec chiffrement AES-256-GCM.
-            </p>
-          </div>
-
-          <div className="card-glass">
-            <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius)', background: 'var(--c-brand-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--c-brand-strong)', marginBottom: 'var(--space-4)' }}>
-              <Code2 size={22} />
-            </div>
-            <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, marginBottom: 'var(--space-2)' }}>SDK Client & API REST</h3>
-            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>
-              SDK léger `@lulumails/sdk` et API REST compatible Node.js, Python, PHP, React Native et cURL.
-            </p>
-          </div>
-
-          <div className="card-glass">
-            <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius)', background: 'var(--c-brand-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--c-brand-strong)', marginBottom: 'var(--space-4)' }}>
-              <Layers size={22} />
-            </div>
-            <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, marginBottom: 'var(--space-2)' }}>Éditeur de Templates HTML</h3>
-            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>
-              Concevez des modèles de mails réutilisables avec injection dynamique de variables (ex: {"{{name}}, {{code}}"}) et prévisualisation instantanée.
-            </p>
-          </div>
+        <div className="feature-grid">
+          {CAPACITES.map(c => {
+            const IconComp = c.icon;
+            return (
+              <article key={c.titre} className="feature">
+                <span className="feature-icon">
+                  <IconComp size={22} />
+                </span>
+                <h3>{c.titre}</h3>
+                <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>{c.texte}</p>
+              </article>
+            );
+          })}
         </div>
       </section>
 
-      {/* Commercial Pricing Plans */}
-      <section style={{ background: 'var(--c-surface-sunken)', padding: 'var(--space-8) var(--space-6)', borderTop: '1px solid var(--c-line)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
-            <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, marginBottom: 'var(--space-2)' }}>
-              Tarification Commerciale & Offres
-            </h2>
-            <p style={{ color: 'var(--c-muted)' }}>
-              Choisissez le plan adapté à la taille de vos projets.
-            </p>
-          </div>
+      {/* ---------------------------------------------------------- Étapes */}
+      <section className="section band">
+        <div className="shell">
+          <header className="section-head text-center">
+            <h2>Trois étapes simples pour commencer</h2>
+            <p>Prise en main immédiate en moins de 2 minutes pour votre application.</p>
+          </header>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-5)' }}>
-            {/* Free Plan */}
-            <div className="card-glass" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <div style={{ fontWeight: 700, fontSize: 'var(--text-lg)', marginBottom: 'var(--space-2)' }}>Développeur Gratuit</div>
-              <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)', marginBottom: 'var(--space-4)' }}>Idéal pour les projets persos et startups au lancement.</p>
-
-              <div style={{ fontSize: 'var(--text-3xl)', fontWeight: 800, color: 'var(--c-ink)', marginBottom: 'var(--space-4)' }}>
-                0 € <span style={{ fontSize: 'var(--text-xs)', fontWeight: 400, color: 'var(--c-muted)' }}>/ mois à vie</span>
-              </div>
-
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 var(--space-6)', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', fontSize: 'var(--text-sm)' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> 10 000 emails / mois (Cumul BYOK)</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Jusqu'à 3 providers BYOK</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Accès API REST & SDK Client</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Éditeur de Templates de base</li>
-              </ul>
-
-              <button onClick={() => onOpenAuth('register')} className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
-                Créer un compte gratuit
-              </button>
-            </div>
-
-            {/* Pro Plan (Highlighted) */}
-            <div className="card-glass" style={{ display: 'flex', flexDirection: 'column', height: '100%', borderColor: 'var(--c-brand)', borderWidth: '2px', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '-12px', right: '20px', background: 'var(--c-brand)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 'var(--radius-full)' }}>
-                POPULAIRE
-              </div>
-
-              <div style={{ fontWeight: 700, fontSize: 'var(--text-lg)', marginBottom: 'var(--space-2)' }}>Pro / Growth</div>
-              <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)', marginBottom: 'var(--space-4)' }}>Pour les applications SaaS et boutiques en croissance.</p>
-
-              <div style={{ fontSize: 'var(--text-3xl)', fontWeight: 800, color: 'var(--c-brand-strong)', marginBottom: 'var(--space-4)' }}>
-                19 € <span style={{ fontSize: 'var(--text-xs)', fontWeight: 400, color: 'var(--c-muted)' }}>/ mois</span>
-              </div>
-
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 var(--space-6)', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', fontSize: 'var(--text-sm)' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Emails illimités (BYOK + Pool)</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Providers BYOK illimités</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Basculement prioritaire 99.99% SLA</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Domaines personnalisés (DKIM/SPF)</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Support réactif 24/7</li>
-              </ul>
-
-              <button onClick={() => onOpenAuth('register')} className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                Essai Gratuit 14 Jours
-              </button>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="card-glass" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <div style={{ fontWeight: 700, fontSize: 'var(--text-lg)', marginBottom: 'var(--space-2)' }}>Entreprise</div>
-              <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)', marginBottom: 'var(--space-4)' }}>Infrastructure dédiée et haut volume sur mesure.</p>
-
-              <div style={{ fontSize: 'var(--text-3xl)', fontWeight: 800, color: 'var(--c-ink)', marginBottom: 'var(--space-4)' }}>
-                99 € <span style={{ fontSize: 'var(--text-xs)', fontWeight: 400, color: 'var(--c-muted)' }}>/ mois</span>
-              </div>
-
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 var(--space-6)', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', fontSize: 'var(--text-sm)' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Tout du Plan Pro</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Serveurs SMTP dédiés & IP dédiées</li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle2 size={16} color="var(--c-ok)" /> Support d'intégration dédié par un ingénieur</li>
-              </ul>
-
-              <button onClick={() => onOpenAuth('register')} className="btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
-                Contacter l'équipe
-              </button>
-            </div>
-          </div>
+          <ol className="steps">
+            {ETAPES.map(e => (
+              <li key={e.n}>
+                <span className="step-num">{e.n}</span>
+                <h3>{e.titre}</h3>
+                <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)' }}>{e.texte}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section style={{ padding: 'var(--space-8) var(--space-6)', maxWidth: '800px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, textAlign: 'center', marginBottom: 'var(--space-6)' }}>
-          Foire Aux Questions (FAQ)
-        </h2>
+      {/* ------------------------------------------------------------ Tarifs */}
+      <section className="section shell" id="tarifs">
+        <header className="section-head text-center">
+          <h2>Tarification Commerciale & Offres</h2>
+          <p>
+            Profitez d'un accès complet et évolutif. Aucun frais caché ni surprise sur votre facture.
+          </p>
+        </header>
+
+        <div className="pricing">
+          {/* Plan Développeur Gratuit */}
+          <article className="price-card text-center">
+            <span className="price-flag">Offre de Lancement</span>
+            <h3>Développeur Gratuit</h3>
+            <div className="price-amount">
+              0 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--c-muted)', fontWeight: 400 }}>€ / mois à vie</span>
+            </div>
+            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)' }}>Parfait pour les projets persos et applications au démarrage.</p>
+            <ul className="price-list">
+              <li><Check size={16} color="var(--c-brand-strong)" /> 10 000 emails / mois gratuits (Cumul)</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> 3 Providers BYOK enregistrables</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Accès complet API REST & SDK Client</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Éditeur de Templates de base</li>
+            </ul>
+            <button onClick={() => onOpenAuth('register')} className="btn btn-outline btn-block">
+              Créer mon compte gratuit
+            </button>
+          </article>
+
+          {/* Plan Pro / Growth (Featured) */}
+          <article className="price-card featured text-center">
+            <span className="price-flag" style={{ background: 'var(--c-brand)' }}>POPULAIRE</span>
+            <h3>Pro / Growth</h3>
+            <div className="price-amount" style={{ color: 'var(--c-brand-strong)' }}>
+              19 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--c-muted)', fontWeight: 400 }}>€ / mois</span>
+            </div>
+            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)' }}>Pour les applications SaaS et entreprises en forte croissance.</p>
+            <ul className="price-list">
+              <li><Check size={16} color="var(--c-brand-strong)" /> Emails illimités (BYOK + Pool)</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Providers BYOK illimités</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Basculement prioritaire 99.99% SLA</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Domaines personnalisés (DKIM/SPF)</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Support réactif 24/7 par un ingénieur</li>
+            </ul>
+            <button onClick={() => onOpenAuth('register')} className="btn btn-brand btn-block btn-lg">
+              Essai Gratuit 14 Jours
+            </button>
+          </article>
+
+          {/* Plan Entreprise */}
+          <article className="price-card text-center">
+            <h3>Entreprise</h3>
+            <div className="price-amount">
+              99 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--c-muted)', fontWeight: 400 }}>€ / mois</span>
+            </div>
+            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)' }}>Infrastructure dédiée haut volume et garanties sur mesure.</p>
+            <ul className="price-list">
+              <li><Check size={16} color="var(--c-brand-strong)" /> Tout du Plan Pro</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Serveurs SMTP dédiés & IP dédiées</li>
+              <li><Check size={16} color="var(--c-brand-strong)" /> Support d'intégration dédié sur-mesure</li>
+            </ul>
+            <button onClick={() => onOpenAuth('register')} className="btn btn-outline btn-block">
+              Contacter l'équipe
+            </button>
+          </article>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------ FAQ */}
+      <section className="section shell" style={{ maxWidth: '800px' }}>
+        <header className="section-head text-center">
+          <h2>Foire Aux Questions (FAQ)</h2>
+          <p>Toutes les réponses à vos questions sur le fonctionnement de LuluMails.</p>
+        </header>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="card-glass" style={{ padding: '16px', cursor: 'pointer' }} onClick={() => toggleFaq(idx)}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600 }}>
+          {FAQS.map((faq, idx) => (
+            <div key={idx} className="feature" style={{ padding: '16px 20px', cursor: 'pointer', textAlign: 'left', alignItems: 'stretch' }} onClick={() => toggleFaq(idx)}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: 'var(--text-base)' }}>
                 <span>{faq.q}</span>
                 {openFaq === idx ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
               </div>
@@ -333,15 +333,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ background: 'var(--c-surface)', borderTop: '1px solid var(--c-line)', padding: 'var(--space-6)', textAlign: 'center' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <Send size={20} color="var(--c-brand)" />
-          <span style={{ fontFamily: 'var(--font-brand)', fontSize: '1.4rem' }}>LuluMails</span>
+      {/* --------------------------------------------------------------- CTA Band */}
+      <section className="section cta-band">
+        <div className="shell text-center">
+          <h2>Envoyez vos emails dès aujourd'hui, <span className="hero-accent">100% gratuitement</span></h2>
+          <p style={{ color: 'var(--c-muted)', maxWidth: '54ch', margin: '0 auto var(--space-5)' }}>
+            Profitez dès maintenant d'une infrastructure d'envoi d'emails haute performance et sans facture mensuelle.
+          </p>
+          <button onClick={() => onOpenAuth('register')} className="btn btn-brand btn-lg">
+            <Plus size={18} />
+            <span>Créer mon compte gratuit</span>
+          </button>
         </div>
-        <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)' }}>
-          © {new Date().getFullYear()} LuluMails. La plateforme d'API Email Commerciale & Gratuite. Tous droits réservés.
-        </p>
+      </section>
+
+      {/* --------------------------------------------------------------- Footer */}
+      <footer className="site-footer">
+        <div className="shell site-footer-inner">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Send size={20} color="var(--c-brand)" />
+            <span className="marque brand-nom">LuluMails</span>
+          </div>
+
+          <div style={{ fontSize: 'var(--text-xs)' }}>
+            © {new Date().getFullYear()} LuluMails. La plateforme d'API Email Commerciale & Gratuite. Tous droits réservés.
+          </div>
+        </div>
       </footer>
     </div>
   );
