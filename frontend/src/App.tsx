@@ -5,6 +5,7 @@ import { ApiKeys } from './pages/ApiKeys';
 import { Providers } from './pages/Providers';
 import { Templates } from './pages/Templates';
 import { Logs } from './pages/Logs';
+import { Docs } from './pages/Docs';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -21,6 +22,8 @@ export const App: React.FC = () => {
         return <Templates />;
       case 'logs':
         return <Logs />;
+      case 'docs':
+        return <Docs />;
       default:
         return <Overview />;
     }

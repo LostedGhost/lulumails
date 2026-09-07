@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Key, Server, FileCode, History, Sun, Moon, Send } from 'lucide-react';
+import { LayoutDashboard, Key, Server, FileCode, History, BookOpen, Sun, Moon, Send } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,6 +24,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTa
     { id: 'providers', label: 'Providers & BYOK', icon: Server },
     { id: 'templates', label: 'Templates Mail', icon: FileCode },
     { id: 'logs', label: 'Logs d\'envoi', icon: History },
+    { id: 'docs', label: 'Documentation Dev', icon: BookOpen },
   ];
 
   return (
