@@ -1,4 +1,4 @@
-/* Objets 3D en relief et mouvements pour LuluMails (Style LuluFiles). */
+/* Objets 3D en relief et mouvements pour LuluMails (Style & Cinématique LuluFiles). */
 
 .obj-stage {
   perspective: 900px;
@@ -181,31 +181,24 @@
 /* ----------------------------------------------------- Stage 3D Hero Scene */
 
 .hero-3d-stage-wrapper {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-3d-stage {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 480px;
-  height: 480px;
+  position: relative;
+  width: 360px;
+  height: 360px;
   perspective: 1000px;
-}
-
-@media (max-width: 1024px) {
-  .hero-3d-stage {
-    display: none;
-  }
 }
 
 .hologram-ring {
   position: absolute;
-  inset: 40px;
+  inset: 20px;
   border-radius: 50%;
   border: 1px dashed color-mix(in srgb, var(--c-brand) 35%, transparent);
   animation: spinRing 25s linear infinite;
@@ -218,14 +211,14 @@
 
 .hero-3d-plane-container {
   position: absolute;
-  top: 60px;
-  left: 80px;
+  top: 40px;
+  left: 40px;
 }
 
 .hero-3d-cube-container {
   position: absolute;
-  bottom: 80px;
-  right: 60px;
+  bottom: 40px;
+  right: 30px;
 }
 
 .hero-3d-card {
@@ -234,15 +227,15 @@
 }
 
 .hero-3d-card.card-1 {
-  top: 100px;
-  right: 80px;
+  top: 60px;
+  right: 30px;
   transform: rotate(-8deg) scale(0.9);
   animation: floatCard1 5s ease-in-out infinite alternate;
 }
 
 .hero-3d-card.card-2 {
-  bottom: 120px;
-  left: 60px;
+  bottom: 60px;
+  left: 30px;
   transform: rotate(6deg) scale(0.85);
   animation: floatCard2 6s ease-in-out infinite alternate;
 }

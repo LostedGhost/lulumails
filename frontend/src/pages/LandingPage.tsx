@@ -13,7 +13,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
   const [monthlyVolume, setMonthlyVolume] = useState(25000);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // SendGrid cost estimation vs LuluMails
   const sendgridCost = Math.round((monthlyVolume / 10000) * 15 + 20);
 
   const toggleFaq = (index: number) => {
@@ -96,71 +95,80 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
       <ThreeCanvasScene />
 
       {/* ------------------------------------------------------------ Hero */}
-      <section className="hero">
+      <section className="hero shell">
         <div className="hero-glow" aria-hidden="true" />
 
-        {/* Floating CSS 3D Scene */}
-        <Hero3DScene />
-
-        <div className="shell hero-inner">
-          {/* Badge Style LuluFiles */}
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 'var(--space-2)',
-            padding: '6px 16px',
-            borderRadius: 'var(--radius-full)',
-            background: 'var(--c-brand-soft)',
-            color: 'var(--c-brand-strong)',
-            fontSize: 'var(--text-xs)',
-            fontWeight: 600,
-          }}>
-            <Sparkles size={14} />
-            <span>Moteur 3D API Email Commercial · 100% Gratuit</span>
-          </div>
-
-          <h1 className="hero-title">
-            Envoyez des millions d'emails <br />
-            <span className="hero-accent">sans débourser un centime</span>
-          </h1>
-
-          <p className="hero-lede">
-            LuluMails agrège intelligemment les quotas gratuits des meilleurs routeurs (Resend, Brevo, MailerSend, SMTP) avec basculement automatique. Dites adieu aux factures SendGrid à 200$/mois.
-          </p>
-
-          <div className="hero-actions">
-            <button onClick={() => onOpenAuth('register')} className="btn btn-brand btn-lg">
-              <Plus size={18} />
-              <span>Démarrer gratuitement</span>
-            </button>
-            <button onClick={onGoToDashboard} className="btn btn-outline btn-lg">
-              <span>Accéder à la Console</span>
-            </button>
-          </div>
-
-          <p className="hero-note">
-            100% Gratuit · Sans carte bancaire · Accès illimité offert
-          </p>
-
-          {/* Snippet Code Style LuluFiles */}
-          <div className="snippet">
-            <div className="snippet-bar">
-              <span className="snippet-dot" />
-              <span className="snippet-dot" />
-              <span className="snippet-dot" />
-              <span className="snippet-title">email.ts — @lulumails/sdk</span>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 'var(--space-6)',
+          alignItems: 'center',
+        }}>
+          {/* Column 1: Hero Text & CTAs */}
+          <div className="hero-inner" style={{ textAlign: 'left', justifyItems: 'start' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              padding: '6px 16px',
+              borderRadius: 'var(--radius-full)',
+              background: 'var(--c-brand-soft)',
+              color: 'var(--c-brand-strong)',
+              fontSize: 'var(--text-xs)',
+              fontWeight: 600,
+            }}>
+              <Sparkles size={14} />
+              <span>Moteur 3D API Email Commercial · 100% Gratuit</span>
             </div>
-            <pre>
-              <code>
-                <span className="tk-cmd">import</span> {'{'} LuluMails {'}'} <span className="tk-cmd">from</span> <span className="tk-str">'@lulumails/sdk'</span>;{'\n\n'}
-                <span className="tk-cmd">const</span> lulu = <span className="tk-cmd">new</span> <span className="tk-key">LuluMails</span>({'{'} apiKey: <span className="tk-str">'lm_live_a1b2c3d4'</span> {'}'});{'\n\n'}
-                <span className="tk-cmd">await</span> lulu.emails.<span className="tk-key">send</span>({'{'}{'\n'}
-                {"  "}to: <span className="tk-str">'client@domaine.com'</span>,{"\n"}
-                {"  "}subject: <span className="tk-str">'Bienvenue sur l\'application'</span>,{"\n"}
-                {"  "}html: <span className="tk-str">'&lt;h1&gt;Bonjour Thomas&lt;/h1&gt;'</span>{"\n"}
-                {'}'}); <span className="tk-com">// ➔ Failover automatique Resend ➔ Brevo ➔ SMTP (0€)</span>
-              </code>
-            </pre>
+
+            <h1 className="hero-title" style={{ marginInline: 0 }}>
+              Envoyez des millions d'emails <br />
+              <span className="hero-accent">sans débourser un centime</span>
+            </h1>
+
+            <p className="hero-lede" style={{ marginInline: 0 }}>
+              LuluMails agrège intelligemment les quotas gratuits des meilleurs routeurs (Resend, Brevo, MailerSend, SMTP) avec basculement automatique. Dites adieu aux factures SendGrid à 200$/mois.
+            </p>
+
+            <div className="hero-actions" style={{ marginInline: 0, justifyContent: 'flex-start' }}>
+              <button onClick={() => onOpenAuth('register')} className="btn btn-brand btn-lg">
+                <Plus size={18} />
+                <span>Démarrer gratuitement</span>
+              </button>
+              <button onClick={onGoToDashboard} className="btn btn-outline btn-lg">
+                <span>Accéder à la Console</span>
+              </button>
+            </div>
+
+            <p className="hero-note" style={{ marginInline: 0 }}>
+              100% Gratuit · Sans carte bancaire · Accès illimité offert
+            </p>
+          </div>
+
+          {/* Column 2: 3D Stage Scene & Code Snippet */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', alignItems: 'center' }}>
+            <Hero3DScene />
+
+            {/* Snippet Code Style LuluFiles */}
+            <div className="snippet">
+              <div className="snippet-bar">
+                <span className="snippet-dot" />
+                <span className="snippet-dot" />
+                <span className="snippet-dot" />
+                <span className="snippet-title">email.ts — @lulumails/sdk</span>
+              </div>
+              <pre>
+                <code>
+                  <span className="tk-cmd">import</span> {'{'} LuluMails {'}'} <span className="tk-cmd">from</span> <span className="tk-str">'@lulumails/sdk'</span>;{'\n\n'}
+                  <span className="tk-cmd">const</span> lulu = <span className="tk-cmd">new</span> <span className="tk-key">LuluMails</span>({'{'} apiKey: <span className="tk-str">'lm_live_a1b2c3d4'</span> {'}'});{'\n\n'}
+                  <span className="tk-cmd">await</span> lulu.emails.<span className="tk-key">send</span>({'{'}{'\n'}
+                  {"  "}to: <span className="tk-str">'client@domaine.com'</span>,{"\n"}
+                  {"  "}subject: <span className="tk-str">'Bienvenue sur l\'application'</span>,{"\n"}
+                  {"  "}html: <span className="tk-str">'&lt;h1&gt;Bonjour Thomas&lt;/h1&gt;'</span>{"\n"}
+                  {'}'}); <span className="tk-com">// ➔ Failover automatique (0€)</span>
+                </code>
+              </pre>
+            </div>
           </div>
         </div>
       </section>
@@ -175,7 +183,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
 
           <div style={{ maxWidth: '680px', margin: '0 auto', background: 'var(--c-surface-raised)', padding: 'var(--space-6)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--c-line)', boxShadow: 'var(--shadow)' }}>
             <div style={{ marginBottom: 'var(--space-5)' }}>
-              <label style={{ fontWeight: 600, display: 'block', marginBottom: 'var(--space-2)', fontSize: 'var(--text-base)' }}>
+              <label style={{ fontWeight: 600, display: 'block', marginBottom: 'var(--space-2)', fontSize: 'var(--text-base)', color: 'var(--c-ink)' }}>
                 Volume d'emails par mois : <span style={{ color: 'var(--c-brand-strong)', fontSize: 'var(--text-xl)', fontWeight: 700 }}>{monthlyVolume.toLocaleString('fr-FR')} emails</span>
               </label>
               <input
@@ -221,8 +229,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
                 <span className="feature-icon">
                   <IconComp size={22} />
                 </span>
-                <h3>{c.titre}</h3>
-                <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>{c.texte}</p>
+                <h3 style={{ color: 'var(--c-ink)' }}>{c.titre}</h3>
+                <p style={{ color: 'var(--c-ink-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>{c.texte}</p>
               </article>
             );
           })}
@@ -241,8 +249,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
             {ETAPES.map(e => (
               <li key={e.n}>
                 <span className="step-num">{e.n}</span>
-                <h3>{e.titre}</h3>
-                <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-sm)' }}>{e.texte}</p>
+                <h3 style={{ color: 'var(--c-ink)' }}>{e.titre}</h3>
+                <p style={{ color: 'var(--c-ink-soft)', fontSize: 'var(--text-sm)' }}>{e.texte}</p>
               </li>
             ))}
           </ol>
@@ -266,7 +274,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
             <div className="price-amount">
               0 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--c-muted)', fontWeight: 400 }}>€ / mois à vie</span>
             </div>
-            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)' }}>Parfait pour les projets persos et applications au démarrage.</p>
+            <p style={{ color: 'var(--c-ink-soft)', fontSize: 'var(--text-xs)' }}>Parfait pour les projets persos et applications au démarrage.</p>
             <ul className="price-list">
               <li><Check size={16} color="var(--c-brand-strong)" /> 10 000 emails / mois gratuits (Cumul)</li>
               <li><Check size={16} color="var(--c-brand-strong)" /> 3 Providers BYOK enregistrables</li>
@@ -285,7 +293,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
             <div className="price-amount" style={{ color: 'var(--c-brand-strong)' }}>
               19 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--c-muted)', fontWeight: 400 }}>€ / mois</span>
             </div>
-            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)' }}>Pour les applications SaaS et entreprises en forte croissance.</p>
+            <p style={{ color: 'var(--c-ink-soft)', fontSize: 'var(--text-xs)' }}>Pour les applications SaaS et entreprises en forte croissance.</p>
             <ul className="price-list">
               <li><Check size={16} color="var(--c-brand-strong)" /> Emails illimités (BYOK + Pool)</li>
               <li><Check size={16} color="var(--c-brand-strong)" /> Providers BYOK illimités</li>
@@ -304,7 +312,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
             <div className="price-amount">
               99 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--c-muted)', fontWeight: 400 }}>€ / mois</span>
             </div>
-            <p style={{ color: 'var(--c-muted)', fontSize: 'var(--text-xs)' }}>Infrastructure dédiée haut volume et garanties sur mesure.</p>
+            <p style={{ color: 'var(--c-ink-soft)', fontSize: 'var(--text-xs)' }}>Infrastructure dédiée haut volume et garanties sur mesure.</p>
             <ul className="price-list">
               <li><Check size={16} color="var(--c-brand-strong)" /> Tout du Plan Pro</li>
               <li><Check size={16} color="var(--c-brand-strong)" /> Serveurs SMTP dédiés & IP dédiées</li>
@@ -327,12 +335,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           {FAQS.map((faq, idx) => (
             <div key={idx} className="feature" style={{ padding: '16px 20px', cursor: 'pointer', textAlign: 'left', alignItems: 'stretch' }} onClick={() => toggleFaq(idx)}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: 'var(--text-base)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: 'var(--text-base)', color: 'var(--c-ink)' }}>
                 <span>{faq.q}</span>
                 {openFaq === idx ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
               </div>
               {openFaq === idx && (
-                <p style={{ marginTop: '12px', color: 'var(--c-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>
+                <p style={{ marginTop: '12px', color: 'var(--c-ink-soft)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>
                   {faq.a}
                 </p>
               )}
@@ -363,7 +371,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDashboard, onOpe
             <span className="marque brand-nom">LuluMails</span>
           </div>
 
-          <div style={{ fontSize: 'var(--text-xs)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--c-muted)' }}>
             © {new Date().getFullYear()} LuluMails. La plateforme d'API Email Commerciale & Gratuite. Tous droits réservés.
           </div>
         </div>

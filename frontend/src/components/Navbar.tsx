@@ -1,5 +1,5 @@
-import React from 'react';
-import { Send, User, LogOut, Code2, LayoutDashboard, Sparkles, Moon, Sun } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Send, User, LogOut, Code2, LayoutDashboard, Sun, Moon } from 'lucide-react';
 
 interface NavbarProps {
   currentView: 'landing' | 'dashboard' | 'docs';
@@ -10,6 +10,16 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ currentView, setCurrentView, user, onOpenAuth, onLogout }) => {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   return (
     <header className="site-header">
       <div className="shell site-header-inner">
@@ -77,8 +87,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, setCurrentView, use
           </button>
         </nav>
 
-        {/* Auth Actions */}
+        {/* Auth Actions & Theme Toggle */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+          {/* Theme Toggle Button (Light / Dark) */}
+          <button
+            onClick={toggleTheme}
+            className="btn btn-outline btn-sm btn-icon"
+            title={`Basculer en mode ${theme === 'light' ? 'sombre' : 'clair'}`}
+            style={{ padding: '0 8px', height: '32px' }}
+          >
+            {theme === 'light' ? <Moon size={16} /> : <Sun size={16} color="#fbbf24" />}
+          </button>
+
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--c-ink)' }}>
